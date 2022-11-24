@@ -56,10 +56,12 @@ import java.util.Map;
 
 public class CameraActivity extends AppCompatActivity {
     List<Bitmap> l = new ArrayList<Bitmap>();
+    Map<Integer,Integer> track;
     Map<String,JSONObject> result;
     RequestQueue q;
     int i;
-    int j;
+    int imgViews;
+    int j,err;
 
     AlertDialog.Builder builder;
     JSONObject fn;
@@ -67,7 +69,8 @@ public class CameraActivity extends AppCompatActivity {
     private int progressBarStatus = 0;
     private Handler progressBarHandler = new Handler();
     AlertDialog diag,diag2;
-    ImageView Remove;
+    ImageView display,del;
+    int curr;
     TextView test;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,38 +82,46 @@ public class CameraActivity extends AppCompatActivity {
             }, 100);
 
         }
+        imgViews=0;
+        Button rm = (Button)findViewById(R.id.remove);
+        rm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(l.size()==0){
+                    Intent i = new Intent(getApplicationContext(),landing.class);
+                    startActivity(i);
+                }
+                else{
+                    l.remove(curr);
+
+                    for (Map.Entry<Integer, Integer> entry : track.entrySet()) {
+                        if(entry.getValue()>curr){
+                        track.put(entry.getKey(),entry.getValue()-1);
+                        }
+                    }
+                    i--;
+                    LinearLayout layout = (LinearLayout) findViewById(R.id.linear);
+                    layout.removeView(del);
+                    if(l.size()!=0){
+                        display.setImageBitmap(l.get(0));
+                    }
+                    else{
+                        display.setImageResource(R.drawable.cloth);
+                    }
+                }
+
+            }
+        });
+        err=0;
         result = new HashMap<String,JSONObject>();
+        track = new HashMap<Integer,Integer>();
         builder = new AlertDialog.Builder(CameraActivity.this);
 
-        test = (TextView) findViewById(R.id.test);
-        builder.setTitle("Remove Image");
-
-
-        builder.setMessage("Would you like to remove clicked Image?");
-
-
-        //Button One : Yes
-        builder.setPositiveButton("Remove", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                LinearLayout layout = (LinearLayout) findViewById(R.id.linear);
-
-                layout.removeView(Remove);
-                l.remove((int)Remove.getId()-1);
-                i--;
-            }
-        });
-
+        display = (ImageView)findViewById(R.id.dsp);
 
         //Button Two : No
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Remove=null;
-                dialog.cancel();
-            }
-        });
-        diag = builder.create();
+
+
         fn = new JSONObject();
         q = Volley.newRequestQueue(CameraActivity.this);
         i = 0;
@@ -124,8 +135,8 @@ public class CameraActivity extends AppCompatActivity {
             }
         });
         btn.performClick();
-        Button btn2 = (Button) findViewById(R.id.send);
-        btn2.setOnClickListener(new View.OnClickListener() {
+        Button send = (Button) findViewById(R.id.send);
+        send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 RequestQueue q = Volley.newRequestQueue(CameraActivity.this);
@@ -189,7 +200,7 @@ public class CameraActivity extends AppCompatActivity {
         String url = "https://api.ximilar.com/detection/v2/detect/";
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 110, baos);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] imageBytes = baos.toByteArray();
         String imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
         JSONObject jsonParams = new JSONObject();
@@ -243,8 +254,8 @@ public class CameraActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(CameraActivity.this, error.toString(), Toast.LENGTH_LONG).show();
 //                tv.setText(error.toString());
-                j++;
-                if (j<12) {
+                err++;
+                if (err<12) {
                     processBitmap(bitmap,ind);
                 }
             }
@@ -330,8 +341,7 @@ public class CameraActivity extends AppCompatActivity {
                 Log.d("small123",String.valueOf(small));
                 s+=("\n");
                 s+=("Samll:"+small+"   lower: "+bot+"  upper: "+top);
-                test.setText(s);
-//                sendInt(small,bot,top);
+                sendInt(small,bot,top);
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -369,15 +379,19 @@ public class CameraActivity extends AppCompatActivity {
         // Match the request 'pic id with requestCode
         if (requestCode == 100) {
             // BitMap is data structure of image file which store the image in memory
-
+            if(data==null)return;
             Bitmap photo = (Bitmap) data.getExtras().get("data");
             // Set the image in imageview for display
+            display.setImageBitmap(photo);
             l.add(photo);
+
 //            ImageView iv = (ImageView) findViewById(R.id.imageView);
 //            iv.setImageBitmap(photo);
             LinearLayout layout = (LinearLayout) findViewById(R.id.linear);
             ImageView imageView = new ImageView(this);
-            imageView.setId(l.size());
+            imageView.setId(imgViews);
+            track.put(imgViews,l.size()-1);
+            imgViews++;
             imageView.setPadding(2, 2, 2, 2);
             imageView.setImageBitmap(photo);
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
@@ -385,9 +399,11 @@ public class CameraActivity extends AppCompatActivity {
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    diag.show();
-                    Remove =imageView;
-
+                    curr=0;
+                    curr = (int) imageView.getId();
+                    curr = track.get(curr);
+                    display.setImageBitmap(l.get(curr));
+                    del = imageView;
                 }
             });
             imageView.setLayoutParams(params);

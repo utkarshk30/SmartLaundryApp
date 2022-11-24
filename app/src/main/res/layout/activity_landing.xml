@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".landing">
 
+    <TextView
+        android:id="@+id/ordercnt"
+        android:layout_width="285dp"
+        android:layout_height="59dp"
+        android:layout_marginStart="59dp"
+        android:layout_marginEnd="67dp"
+        android:layout_marginBottom="121dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/existing"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <Button
         android:id="@+id/existing"
         android:layout_width="149dp"
@@ -15,7 +28,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/create"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.793" />
 
     <Button
         android:id="@+id/create"
@@ -27,6 +41,32 @@
         app:layout_constraintEnd_toStartOf="@+id/existing"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.793" />
+
+    <Button
+        android:id="@+id/logout"
+        android:layout_width="117dp"
+        android:layout_height="59dp"
+        android:layout_marginStart="276dp"
+        android:text="Logout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.044" />
+
+    <TextView
+        android:id="@+id/nme"
+        android:layout_width="285dp"
+        android:layout_height="59dp"
+        android:layout_marginStart="59dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="67dp"
+        android:layout_marginBottom="108dp"
+        android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/ordercnt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

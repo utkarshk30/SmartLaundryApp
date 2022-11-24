@@ -67,11 +67,16 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.ViewHold
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot sn: snapshot.getChildren())
                 {
+                    User u=sn.getValue(User.class);
+                    Log.d("fuck",String.valueOf(sn.getKey()));
                     if(UID.equals(String.valueOf(sn.getKey())))
                     {
-                        User u=sn.getValue(User.class);
+
                         nm=u.getName();
                         ph=u.getMobile();
+                        holder.phone.setText("Phone Num. : " +ph);
+
+
 
 
                     }
@@ -86,7 +91,6 @@ public class PendingAdapter extends RecyclerView.Adapter<PendingAdapter.ViewHold
 
         holder.name.setText("Order No. : "+ String.valueOf(order.getOrderid()));
         holder.date.setText("Date: " +order.getDate());
-        holder.phone.setText("Phone Num. : " +ph);
         holder.upper.setText("Upper: " +String.valueOf(order.getUpper()));
         holder.lower.setText("Lower: " +String.valueOf(order.getLower()));
         holder.price.setText("Price: " +String.valueOf(order.getPrice()));

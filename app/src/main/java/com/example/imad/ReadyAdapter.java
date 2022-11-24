@@ -73,6 +73,7 @@ public class ReadyAdapter extends RecyclerView.Adapter<ReadyAdapter.ViewHolder> 
                         User u=sn.getValue(User.class);
                         nm=u.getName();
                         ph=u.getMobile();
+                        holder.phone.setText("Phone Num. : " +ph);
 
 
                     }
@@ -87,7 +88,6 @@ public class ReadyAdapter extends RecyclerView.Adapter<ReadyAdapter.ViewHolder> 
 
         holder.name.setText("Order No. : "+ String.valueOf(order.getOrderid()));
         holder.date.setText("Date: " +order.getDate());
-        holder.phone.setText("Phone Num. : " +ph);
         holder.upper.setText("Upper: " +String.valueOf(order.getUpper()));
         holder.lower.setText("Lower: " +String.valueOf(order.getLower()));
         holder.price.setText("Price: " +String.valueOf(order.getPrice()));

@@ -10,13 +10,15 @@
         android:id="@+id/add"
         android:layout_width="45dp"
         android:layout_height="45dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="24dp"
 
+        android:layout_marginBottom="537dp"
         android:background="@drawable/circle"
         android:text="+"
         android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/horizontalScrollView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.978"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -65,17 +67,16 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.767" />
 
-    <TextView
-        android:id="@+id/test"
-        android:layout_width="312dp"
-        android:layout_height="456dp"
-        android:layout_marginTop="32dp"
-        android:text="TextView"
+    <ImageView
+        android:id="@+id/dsp"
+        android:layout_width="318dp"
+        android:layout_height="468dp"
         app:layout_constraintBottom_toTopOf="@+id/horizontalScrollView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.464"
+        app:layout_constraintHorizontal_bias="0.516"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.228" />
+        app:layout_constraintVertical_bias="0.282"
+        app:srcCompat="@drawable/cloth" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

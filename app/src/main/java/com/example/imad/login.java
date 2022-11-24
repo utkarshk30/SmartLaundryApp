@@ -58,7 +58,7 @@ public class login extends AppCompatActivity {
         signUpStudent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), AdminView.class);
+                Intent intent = new Intent(getApplicationContext(), signup.class);
                 startActivity(intent);
             }
         });
@@ -80,17 +80,46 @@ public class login extends AppCompatActivity {
                 public void onClick(View view) {
                     EditText email = findViewById(R.id.email_in);
                     EditText password = findViewById(R.id.password_in);
+                    if(email.getText().toString().equals("")||password.getText().toString().equals("")){
+                        Toast.makeText(login.this, "Please Enter Your Details", Toast.LENGTH_SHORT).show();
+
+                    }
+                    else{
                     mAuth.signInWithEmailAndPassword(email.getText().toString(), password.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                Intent intent = new Intent(getBaseContext(), login.class);
-                                startActivity(intent);
+
+//                                Intent intent = new Intent(getBaseContext(), login.class);
+//                                startActivity(intent);
+                                if(mAuth.getUid()!=null){
+                                    db.getReference().child("Users").child(mAuth.getUid()).addValueEventListener(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            ad = snapshot.child("admin").getValue(Boolean.class);
+                                            if(ad==true){
+                                                Intent intent = new Intent(getApplicationContext(), AdminView.class);
+                                                startActivity(intent);
+                                            }
+                                            else{
+                                                Intent intent = new Intent(getApplicationContext(), landing.class);
+                                                startActivity(intent);
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+
+                                    });
+
+                                }
                             } else {
                                 Toast.makeText(getApplicationContext(), "failed", Toast.LENGTH_SHORT).show();
                             }
                         }
-                    });
+                    });}
                 }
             });
         }

@@ -27,6 +27,9 @@
         android:theme="@style/Theme.IMAD"
         tools:targetApi="31">
         <activity
+            android:name=".Gallery"
+            android:exported="false" />
+        <activity
             android:name=".AdminView"
             android:exported="false"
             android:label="@string/title_activity_admin_view"

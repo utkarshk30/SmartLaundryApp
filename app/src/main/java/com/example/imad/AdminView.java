@@ -42,7 +42,15 @@ public class AdminView extends AppCompatActivity {
         FirebaseAuth mauth = FirebaseAuth.getInstance();
         mauth.signOut();
         Intent intent = new Intent(getApplicationContext(), login.class);
-        startActivity(intent);
+       // startActivity(intent);
     }
 
+    @Override
+    public void onBackPressed(){
+        Intent a = new Intent(Intent.ACTION_MAIN);
+        a.addCategory(Intent.CATEGORY_HOME);
+        a.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(a);
+
     }
+}

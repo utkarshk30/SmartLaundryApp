@@ -48,7 +48,7 @@ public class signup extends AppCompatActivity {
                                User us = new User(nm,ph,false);
                                 String id = task.getResult().getUser().getUid();
                                 database.getReference().child("Users").child(id).setValue(us);
-                                Intent intent = new Intent(getApplicationContext(), AdminView.class);
+                                Intent intent = new Intent(getApplicationContext(), landing.class);
                                 startActivity(intent);
                             }
                         }
