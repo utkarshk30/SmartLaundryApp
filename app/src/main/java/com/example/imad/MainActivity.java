@@ -3,6 +3,7 @@ package com.example.imad;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -72,6 +73,8 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        };
         //encode image to base64 string
+        Intent i = new Intent(getApplicationContext(), CameraActivity.class);
+        startActivity(i);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.img2);
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "535556351698",
+    "firebase_url": "https://imadfront-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "imadfront",
+    "storage_bucket": "imadfront.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:535556351698:android:4e1a748c09ec24e7202f0b",
+        "android_client_info": {
+          "package_name": "com.example.imad"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "535556351698-i0egpokk6k3h8pets510ihjb4ct9qr14.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCA91jCsH3ThoTUuVmDQO9Nt4ecCPh0Rsg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "535556351698-i0egpokk6k3h8pets510ihjb4ct9qr14.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
