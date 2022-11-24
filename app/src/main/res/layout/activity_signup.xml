@@ -60,13 +60,14 @@
         android:inputType="textPassword"
         android:textColor="@color/white"
         android:textColorHint="#7C7777" />
+
     <EditText
         android:id="@+id/roll_up"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="40dp"
         android:layout_marginTop="25dp"
-        android:hint="Roll Number"
+        android:hint="Phone Number"
         android:textColor="@color/white"
         android:textColorHint="#7C7777" />
 

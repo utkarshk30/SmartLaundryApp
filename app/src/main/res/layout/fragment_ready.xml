@@ -4,10 +4,10 @@
     android:id="@+id/relativeLayoutReady"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".existingOrders">
+    tools:context=".Ready">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_view"
+        android:id="@+id/rv_ready"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 </RelativeLayout>

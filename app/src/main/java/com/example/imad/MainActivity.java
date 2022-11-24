@@ -77,7 +77,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(i);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.img2);
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        //bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] imageBytes = baos.toByteArray();
         String imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
         JSONObject jsonParams = new JSONObject();

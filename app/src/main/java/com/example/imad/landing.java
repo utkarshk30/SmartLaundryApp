@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 public class landing extends AppCompatActivity {
 
     @Override
@@ -24,8 +26,17 @@ public class landing extends AppCompatActivity {
     }
 
     public void createNew(View view) {
-        Intent i = new Intent(getApplicationContext(),MainActivity.class);
+        Intent i = new Intent(getApplicationContext(),CameraActivity.class);
         startActivity(i);
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        FirebaseAuth mauth = FirebaseAuth.getInstance();
+        mauth.signOut();
+        Intent intent = new Intent(getApplicationContext(), login.class);
+        startActivity(intent);
     }
 }

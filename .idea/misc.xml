@@ -4,17 +4,26 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/Admin/AndroidStudioProjects/IMAD/app/src/main/res/drawable/circle.xml" value="0.1955" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/IMAD/app/src/main/res/drawable/cust_linear.xml" value="0.2915" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/IMAD/app/src/main/res/drawable/round_button.xml" value="0.194" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/IMAD/app/src/main/res/layout/activity_admin.xml" value="0.18697916666666667" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/IMAD/app/src/main/res/layout/activity_admin_view.xml" value="0.34601449275362317" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/IMAD/app/src/main/res/layout/activity_camera.xml" value="0.33" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/IMAD/app/src/main/res/layout/activity_cart.xml" value="0.33" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/IMAD/app/src/main/res/layout/activity_existing_orders.xml" value="0.18854166666666666" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/IMAD/app/src/main/res/layout/activity_landing.xml" value="0.18697916666666667" />
-        <entry key="..\:/Users/Admin/AndroidStudioProjects/IMAD/app/src/main/res/layout/activity_login.xml" value="0.18697916666666667" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/IMAD/app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/IMAD/app/src/main/res/layout/activity_main.xml" value="0.3625" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/IMAD/app/src/main/res/layout/activity_signup.xml" value="0.18854166666666666" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/IMAD/app/src/main/res/layout/activity_test.xml" value="0.18697916666666667" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/IMAD/app/src/main/res/layout/cart_item.xml" value="0.33" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/IMAD/app/src/main/res/layout/fragment_admin.xml" value="0.18697916666666667" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/IMAD/app/src/main/res/layout/fragment_admin_view.xml" value="0.17291666666666666" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/IMAD/app/src/main/res/layout/fragment_pending.xml" value="0.34601449275362317" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/IMAD/app/src/main/res/layout/fragment_ready.xml" value="0.34601449275362317" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/IMAD/app/src/main/res/layout/list_item.xml" value="0.29743589743589743" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/IMAD/app/src/main/res/layout/myorders.xml" value="0.22" />
+        <entry key="..\:/Users/Admin/AndroidStudioProjects/IMAD/app/src/main/res/layout/readyorder.xml" value="0.25" />
         <entry key="..\:/Users/Admin/AndroidStudioProjects/IMAD/app/src/main/res/layout/round_button.xml" value="0.17291666666666666" />
       </map>
     </option>

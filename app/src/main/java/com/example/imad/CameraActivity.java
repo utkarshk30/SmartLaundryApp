@@ -20,6 +20,7 @@ import android.os.Looper;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.util.Base64;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -65,9 +66,9 @@ public class CameraActivity extends AppCompatActivity {
     ProgressDialog progressBar;
     private int progressBarStatus = 0;
     private Handler progressBarHandler = new Handler();
-    AlertDialog diag;
+    AlertDialog diag,diag2;
     ImageView Remove;
-
+    TextView test;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,7 +82,7 @@ public class CameraActivity extends AppCompatActivity {
         result = new HashMap<String,JSONObject>();
         builder = new AlertDialog.Builder(CameraActivity.this);
 
-
+        test = (TextView) findViewById(R.id.test);
         builder.setTitle("Remove Image");
 
 
@@ -95,7 +96,6 @@ public class CameraActivity extends AppCompatActivity {
                 LinearLayout layout = (LinearLayout) findViewById(R.id.linear);
 
                 layout.removeView(Remove);
-                Toast.makeText(CameraActivity.this, String.valueOf((int)Remove.getId()-1), Toast.LENGTH_SHORT).show();
                 l.remove((int)Remove.getId()-1);
                 i--;
             }
@@ -170,11 +170,10 @@ public class CameraActivity extends AppCompatActivity {
                             new Handler(Looper.getMainLooper()).post(new Runnable() {
                                 @Override
                                 public void run() {
-                                    Toast toast = Toast.makeText(CameraActivity.this, "Task Completed", Toast.LENGTH_SHORT);
-                                    toast.show();
-                                    displayResults();
+
                                 }
                             });
+                            parseResults();
 
                             // close the progress bar dialog
                             progressBar.dismiss();
@@ -188,10 +187,9 @@ public class CameraActivity extends AppCompatActivity {
 
     public void processBitmap(Bitmap bitmap,int ind) {
         String url = "https://api.ximilar.com/detection/v2/detect/";
-        Toast.makeText(CameraActivity.this, "trying api call", Toast.LENGTH_LONG).show();
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 110, baos);
         byte[] imageBytes = baos.toByteArray();
         String imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
         JSONObject jsonParams = new JSONObject();
@@ -236,8 +234,7 @@ public class CameraActivity extends AppCompatActivity {
                 i++;
                 result.put(String.valueOf(ind),response);
 //                tv.setText(response.toString());
-                Toast.makeText(CameraActivity.this, response.toString(), Toast.LENGTH_LONG).show();
-                Toast.makeText(CameraActivity.this, String.valueOf(i) + String.valueOf(l.size()), Toast.LENGTH_LONG).show();
+
 
 
             }
@@ -301,11 +298,72 @@ public class CameraActivity extends AppCompatActivity {
 
 
     }
-    public void displayResults() {
-        l.get(0).getWidth();
+    public void parseResults() {
+        int small=0,bot=0,top=0;
+        String s = "";
+        for(Map.Entry<String,JSONObject> res : result.entrySet()){
+            s = String.valueOf(res);
+            try {
+                JSONArray ja = res.getValue().getJSONArray("records");
+                JSONArray js = ja.getJSONObject(0).getJSONArray("_objects");
+                Log.d("lenJSON",String.valueOf(ja));
+
+
+                int len= js.length();
+                for(int i=0;i<len;i++){
+                    JSONObject entry = js.getJSONObject(i);
+                    Log.d("entry",String.valueOf(entry));
+
+                    String name = entry.getString("name");
+                    if(name.equals("Lower")){
+                        bot++;
+                    }
+                    if(name.equals("Small")){
+                        small++;
+                    }
+                    if(name.equals("UpperWear")){
+                        top++;
+                    }
+                    Log.d("objtsname",String.valueOf(name));
+
+                }
+                Log.d("small123",String.valueOf(small));
+                s+=("\n");
+                s+=("Samll:"+small+"   lower: "+bot+"  upper: "+top);
+                test.setText(s);
+//                sendInt(small,bot,top);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+                Log.d("JsonExceptiona",String.valueOf(e));
+
+            }
+            JSONObject ja= null;
+            try {
+               JSONArray abc = new JSONArray();
+                res.getValue().toJSONArray(abc);
+                Log.d("res",String.valueOf(abc));
+
+
+            } catch (JSONException e) {
+                Log.d("resEx",String.valueOf(e));
+
+                e.printStackTrace();
+            }
+
+
+        }
 
     }
+    public void sendInt(int small,int bot ,int top){
 
+        Intent i = new Intent(this,cart.class);
+        i.putExtra("small",small);
+        i.putExtra("bot",bot);
+        i.putExtra("top",top);
+        startActivity(i);
+
+    }
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         // Match the request 'pic id with requestCode

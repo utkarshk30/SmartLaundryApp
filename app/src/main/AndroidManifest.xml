@@ -27,6 +27,16 @@
         android:theme="@style/Theme.IMAD"
         tools:targetApi="31">
         <activity
+            android:name=".AdminView"
+            android:exported="false"
+            android:label="@string/title_activity_admin_view"
+            android:theme="@style/Theme.IMAD.NoActionBar" />
+        <activity
+            android:name=".admin"
+            android:exported="false"
+            android:label="@string/title_activity_admin"
+            android:theme="@style/Theme.IMAD.NoActionBar" />
+        <activity
             android:name=".existingOrders"
             android:exported="false" />
         <activity

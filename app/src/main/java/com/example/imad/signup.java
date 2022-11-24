@@ -45,10 +45,10 @@ public class signup extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                               User us = new User(nm,ph);
+                               User us = new User(nm,ph,false);
                                 String id = task.getResult().getUser().getUid();
                                 database.getReference().child("Users").child(id).setValue(us);
-                                Intent intent = new Intent(getApplicationContext(), landing.class);
+                                Intent intent = new Intent(getApplicationContext(), AdminView.class);
                                 startActivity(intent);
                             }
                         }

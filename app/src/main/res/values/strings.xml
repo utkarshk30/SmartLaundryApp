@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">IMAD</string>
+    <string name="title_activity_admin">Admin</string>
+    <string name="tab_text_1">Pending Orders</string>
+    <string name="tab_text_2">Ready for Delivery</string>
+    <string name="title_activity_admin_view">AdminView</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

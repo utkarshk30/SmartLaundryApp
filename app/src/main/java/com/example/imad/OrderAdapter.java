@@ -2,11 +2,17 @@ package com.example.imad;
 
 
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,13 +27,17 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>{
 
     private ArrayList<Orders> orders;
     RecyclerView recyclerView;
-
+    String del;
+    AlertDialog.Builder builder2,builder;
+    AlertDialog diag,diag2;
     ViewGroup par;
     DatabaseReference mDatabase;
+    Context existCon;
 
-    public OrderAdapter( ArrayList<Orders> orders) {
+    public OrderAdapter(ArrayList<Orders> orders, Context context) {
 
         this.orders = orders;
+        this.existCon=context;
     }
 
     @Override
@@ -57,7 +67,34 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>{
         holder.lowerprice.setText("Rs "+String.valueOf(b));
         holder.smallprice.setText("Rs "+String.valueOf(c));
         holder.orderid.setText("Order No. : "+String.valueOf(order.getOrderid()));
+        builder2= new AlertDialog.Builder(existCon);
+        builder = new AlertDialog.Builder(existCon);
 
+
+        builder.setTitle("Remove Image");
+
+
+        builder.setMessage("Remove Order From DataBase?");
+
+
+        //Button One : Yes
+        builder.setPositiveButton("Remove", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mDatabase.child("Orders").child(del).removeValue();
+
+            }
+        });
+
+
+        //Button Two : No
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        });
+        diag = builder.create();
 
         if(order.isPaid()==false)
         {
@@ -93,13 +130,57 @@ public class OrderAdapter extends RecyclerView.Adapter<OrderAdapter.ViewHolder>{
 
             }
         }
-//        holder.pay.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                order.setPaid(true);
-//                mDatabase.child("Orders")..setValue(order);
-//            }
-//        });
+        if(order.isDelivered()==true){
+            holder.deli.setEnabled(false);
+            holder.deli.setText("Delivered!!");
+        }
+        holder.pay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                order.setPaid(true);
+                mDatabase.child("Orders").child(String.valueOf(order.getOrderid())).setValue(order);
+//                if (existCon instanceof existingOrders) {
+//                    ((existingOrders)existCon).updatePay();
+//                }
+
+            }
+        });
+        holder.deli.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("call","call");
+                order.setDelivered(true);
+                mDatabase.child("Orders").child(String.valueOf(order.getOrderid())).setValue(order);
+
+
+            }
+        });
+        holder.cr.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(order.isReady()==true&&order.isPaid()==true&&order.isDelivered()==true){
+
+                    del = String.valueOf(order.getOrderid());
+                    diag.show();
+
+                }
+                else{
+                    if(order.isPaid()==false){
+                        builder2.setTitle("PAYMENT");
+                        builder2.setMessage("Order cannot be deleted since Payment is Not Completed Yet");
+                        diag2 = builder2.create();
+                        diag2.show();
+                    }
+                    else if(order.isDelivered()==false){
+                        builder2.setTitle("COLLECT");
+                        builder2.setMessage("Please Collect the order to delete this Receipt");
+                        diag2 = builder2.create();
+                        diag2.show();
+
+                    }
+                }
+            }
+        });
 
 
 

@@ -3,26 +3,12 @@ package com.example.imad;
 
 public class Orders {
 
-    private String date,uid;
+    private String date,uid,id;
     private int upper,lower,small,orderid;
     private double price;
     boolean ready,paid,delivered;
 
     public Orders() {
-
-    }
-
-    public Orders(String date, int upper, int lower, int small, int orderid, double price, boolean ready, boolean paid, boolean delivered,String uid) {
-        this.date = date;
-        this.uid = uid;
-        this.upper = upper;
-        this.lower = lower;
-        this.small = small;
-        this.orderid = orderid;
-        this.price = price;
-        this.ready = ready;
-        this.paid = paid;
-        this.delivered = delivered;
     }
 
     public String getDate() {
@@ -31,6 +17,22 @@ public class Orders {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public int getUpper() {
@@ -97,12 +99,21 @@ public class Orders {
         this.delivered = delivered;
     }
 
-    public String getUid() {
-        return uid;
-    }
 
-    public void setUid(String uid) {
+
+    public Orders(String date, String uid, String id, int upper, int lower, int small, int orderid, double price, boolean ready, boolean paid, boolean delivered) {
+        this.date = date;
         this.uid = uid;
+        this.id = id;
+        this.upper = upper;
+        this.lower = lower;
+        this.small = small;
+        this.orderid = orderid;
+        this.price = price;
+        this.ready = ready;
+        this.paid = paid;
+        this.delivered = delivered;
+
     }
 }
 
