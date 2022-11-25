@@ -1,12 +1,16 @@
 package com.example.imad;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,7 +24,8 @@ import java.util.Objects;
 
 public class landing extends AppCompatActivity {
     int cnt=0;
-
+    AlertDialog diag;
+    AlertDialog.Builder builder;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +41,34 @@ public class landing extends AppCompatActivity {
             }
         });
         Button lg = (Button)findViewById(R.id.logout);
+        builder = new AlertDialog.Builder(landing.this);
+
+
+        builder.setTitle("SELECT");
+
+
+        builder.setMessage("Choose Image from?");
+
+
+        //Button One : Yes
+        builder.setPositiveButton("Gallery", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent i = new Intent(landing.this,Gallery.class);
+                startActivity(i);
+            }
+        });
+
+
+        //Button Two : No
+        builder.setNegativeButton("Camera", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent i = new Intent(landing.this,CameraActivity.class);
+                startActivity(i);
+            }
+        });
+        diag = builder.create();
         lg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -77,6 +110,7 @@ public class landing extends AppCompatActivity {
                 cnt=0;
                 for(DataSnapshot sn:snapshot.getChildren()){
                     Orders order =sn.getValue(Orders.class);
+                    Log.d("order",String.valueOf(order.getUid()));
                     if(order.getUid().equals(UID)){
                         cnt++;
                     }
@@ -94,20 +128,14 @@ public class landing extends AppCompatActivity {
     }
 
     public void createNew(View view) {
-        Intent i = new Intent(getApplicationContext(),CameraActivity.class);
-        startActivity(i);
+//        Intent i = new Intent(getApplicationContext(),Gallery.class);
+//        startActivity(i);
+        diag.show();
 //        Intent i = new Intent(getApplicationContext(),Gallery.class);
 //        startActivity(i);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        FirebaseAuth mauth = FirebaseAuth.getInstance();
-        mauth.signOut();
-        Intent intent = new Intent(getApplicationContext(), login.class);
-        //startActivity(intent);
-    }
+
 
     @Override
     public void onBackPressed(){

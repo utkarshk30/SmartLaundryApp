@@ -4,26 +4,28 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black"
+    android:background="@color/white"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="166dp"
+        android:layout_height="44dp"
         android:layout_gravity="center"
         android:layout_marginTop="100dp"
-        android:text="Student's Sign Up"
-        android:textColor="@color/white"
-        android:textSize="18dp" />
+        android:text="Hey there ✌️"
+        android:textColor="@color/black"
+        android:textSize="22dp"
+        android:textStyle="bold" />
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_height="108dp"
         android:layout_gravity="center"
-        android:layout_marginTop="15dp"/>
+        android:layout_marginTop="15dp"
+        android:src="@drawable/student" />
 
 
 
@@ -34,7 +36,7 @@
         android:layout_marginHorizontal="40dp"
         android:layout_marginTop="25dp"
         android:hint="Name"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textColorHint="#7C7777" />
 
 
@@ -46,7 +48,7 @@
         android:layout_marginTop="25dp"
         android:hint="Email address"
         android:inputType="textEmailAddress"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textColorHint="#7C7777" />
 
 
@@ -58,7 +60,7 @@
         android:layout_marginTop="25dp"
         android:hint="Password"
         android:inputType="textPassword"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textColorHint="#7C7777" />
 
     <EditText
@@ -68,7 +70,7 @@
         android:layout_marginHorizontal="40dp"
         android:layout_marginTop="25dp"
         android:hint="Phone Number"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:textColorHint="#7C7777" />
 
 
@@ -79,6 +81,5 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="25dp"
-        android:backgroundTint="#34B3F1"
         android:text="Sign Up" />
 </LinearLayout>

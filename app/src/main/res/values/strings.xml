@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">IMAD</string>
+    <string name="app_name">SmartLaundry</string>
     <string name="title_activity_admin">Admin</string>
     <string name="tab_text_1">Pending Orders</string>
     <string name="tab_text_2">Ready for Delivery</string>

@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -134,9 +135,10 @@ public class cart extends AppCompatActivity {
             addorder.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    auth = FirebaseAuth.getInstance();
-                    String UID = auth.getCurrentUser().getUid();
                     db = FirebaseDatabase.getInstance().getReference();
+                    FirebaseAuth auth = FirebaseAuth.getInstance();
+                    String UID = auth.getCurrentUser().getUid();
+
                     db.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -174,5 +176,10 @@ public class cart extends AppCompatActivity {
                small.setText(String.valueOf(sm));
            }
 
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent i = new Intent(getApplicationContext(),landing.class);
+        startActivity(i);
+    }
 }

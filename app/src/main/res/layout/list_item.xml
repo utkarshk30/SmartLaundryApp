@@ -117,6 +117,9 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="TextView"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+
                 android:textAlignment="center" />
         </LinearLayout>
 

@@ -7,7 +7,10 @@ import android.app.ProgressDialog;
 import android.content.ClipData;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.ImageDecoder;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -41,9 +44,8 @@ import java.util.List;
 import java.util.Map;
 
 public class Gallery extends AppCompatActivity {
-    ImageSwitcher imageView;
     int PICK_IMAGE_MULTIPLE = 1;
-    List<Bitmap> l = new ArrayList<Bitmap>();
+    List<Bitmap> l = new ArrayList<>();
     Map<Integer,Integer> track;
     Map<String, JSONObject> result;
     RequestQueue q;
@@ -68,7 +70,7 @@ public class Gallery extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
-        mArrayUri = new ArrayList<Uri>();
+        mArrayUri = new ArrayList<>();
         q = Volley.newRequestQueue(Gallery.this);
         i = 0;
         j=0;
@@ -112,43 +114,57 @@ public class Gallery extends AppCompatActivity {
                 }
                 // setting 1st selected image into image switcher
                 position = 0;
-            } else {
+            }
+            else {
                 Uri imageurl = data.getData();
                 mArrayUri.add(imageurl);
-                imageView.setImageURI(mArrayUri.get(0));
+
                 position = 0;
             }
+            processImages();
         } else {
             // show this if no image is selected
             Toast.makeText(this, "You haven't picked Image", Toast.LENGTH_LONG).show();
         }
-        processImages();
 
     }
-    public void processImages(){
-        for(Uri u:mArrayUri) {
+    public void processImages() {
+    for (Uri u:mArrayUri){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), u);
-
+                Bitmap bitmap= ImageDecoder.decodeBitmap(ImageDecoder.createSource(Gallery.this.getContentResolver(), u));
                 processBitmap(bitmap,k);
-                k++;
+                Log.d("szeee",String.valueOf(bitmap));
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } else {
+            try {
+                Bitmap bitmap=  MediaStore.Images.Media.getBitmap(Gallery.this.getContentResolver(), u);
+                processBitmap(bitmap,k);
+
+
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
+        k++;
+    }
         progressBar = new ProgressDialog(Gallery.this);
         progressBar.setCancelable(true);
         progressBar.setMessage("Requests Processing...");
         progressBar.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         progressBar.setProgress(0);
-        progressBar.setMax(l.size());
+        progressBar.setMax(mArrayUri.size());
+        Log.d("szeee",String.valueOf(mArrayUri.size()));
         progressBar.show();
         progressBarStatus = i;
 
 
         new Thread(new Runnable() {
             public void run() {
-                while (progressBarStatus < l.size()) {
+                while (progressBarStatus <mArrayUri.size()) {
                     // performing operation
                     progressBarStatus = i;
                     try {
@@ -164,7 +180,7 @@ public class Gallery extends AppCompatActivity {
                     });
                 }
                 // performing operation if file is downloaded,
-                if (progressBarStatus >= l.size()) {
+                if (progressBarStatus >=mArrayUri.size()) {
                     // sleeping for 1 second after operation completed
 
                     //Intent i = new Intent(getApplicationContext(),CartActivity.class);
@@ -182,23 +198,22 @@ public class Gallery extends AppCompatActivity {
                 }
             }
         }).start();
+
+
     }
-
-
     public void processBitmap(Bitmap bitmap,int ind) {
+        q = Volley.newRequestQueue(Gallery.this);
         String url = "https://api.ximilar.com/detection/v2/detect/";
-
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] imageBytes = baos.toByteArray();
         String imageString = Base64.encodeToString(imageBytes, Base64.DEFAULT);
         JSONObject jsonParams = new JSONObject();
-
         try {
             //Add string params
 
             jsonParams.put("task", "bfc83007-4aed-4f8a-922f-197ce94f9baa");
-            jsonParams.put("version", 1);
+            jsonParams.put("version", 2);
             jsonParams.put("keep_prob",0.15 );
 
         } catch (JSONException e) {
@@ -260,6 +275,9 @@ public class Gallery extends AppCompatActivity {
         q.add(jsonObjectRequest);
 
     }
+
+
+
     public void parseResults(){
         int small=0,bot=0,top=0;
         String s = "";

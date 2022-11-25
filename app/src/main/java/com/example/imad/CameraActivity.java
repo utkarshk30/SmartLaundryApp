@@ -93,20 +93,22 @@ public class CameraActivity extends AppCompatActivity {
                 }
                 else{
                     l.remove(curr);
-
+                    LinearLayout layout = (LinearLayout) findViewById(R.id.linear);
+                    layout.removeView(del);
                     for (Map.Entry<Integer, Integer> entry : track.entrySet()) {
                         if(entry.getValue()>curr){
                         track.put(entry.getKey(),entry.getValue()-1);
                         }
                     }
                     i--;
-                    LinearLayout layout = (LinearLayout) findViewById(R.id.linear);
-                    layout.removeView(del);
+
                     if(l.size()!=0){
                         display.setImageBitmap(l.get(0));
                     }
                     else{
                         display.setImageResource(R.drawable.cloth);
+
+
                     }
                 }
 
@@ -140,10 +142,11 @@ public class CameraActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 RequestQueue q = Volley.newRequestQueue(CameraActivity.this);
-                TextView tv = (TextView) findViewById(R.id.textView);
 
                 for (int j=0;j<l.size();j++) {
                     processBitmap(l.get(j),j);
+                    Log.d("szeee",String.valueOf(l.get(j)));
+
                 }
                 progressBar = new ProgressDialog(CameraActivity.this);
                 progressBar.setCancelable(true);
@@ -209,7 +212,7 @@ public class CameraActivity extends AppCompatActivity {
             //Add string params
 
             jsonParams.put("task", "bfc83007-4aed-4f8a-922f-197ce94f9baa");
-            jsonParams.put("version", 1);
+            jsonParams.put("version", 2);
             jsonParams.put("keep_prob",0.15 );
 
         } catch (JSONException e) {
@@ -385,6 +388,7 @@ public class CameraActivity extends AppCompatActivity {
             display.setImageBitmap(photo);
             l.add(photo);
 
+
 //            ImageView iv = (ImageView) findViewById(R.id.imageView);
 //            iv.setImageBitmap(photo);
             LinearLayout layout = (LinearLayout) findViewById(R.id.linear);
@@ -408,6 +412,7 @@ public class CameraActivity extends AppCompatActivity {
             });
             imageView.setLayoutParams(params);
             layout.addView(imageView);
+            del=imageView;
 
         }
     }
